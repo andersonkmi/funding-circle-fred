@@ -26,7 +26,7 @@ version = '0.0.1'
 sourceCompatibility = 1.8
 
 docker {
-    name "fred-funding-circle"
+    name "fred"
     files jar.archivePath
     buildArgs(['JAR_FILE': "${jar.archiveName}"])
 }
