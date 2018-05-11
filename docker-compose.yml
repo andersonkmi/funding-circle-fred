@@ -1,0 +1,23 @@
+version: '3.1'
+services:
+  fred-db:
+    build:
+      context: .
+      dockerfile: Dockerfile.dbconfig
+    container_name: fred-db
+    restart: always
+    ports:
+        - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=p4SSW0rd
+      - MYSQL_DATABASE=demo-fred
+      - MYSQL_USER=dbuser
+      - MYSQL_PASSWORD=dbp4ss
+  fred-services:
+    depends_on:
+      - fred-db
+    image: fred
+    links:
+      - fred-db:mysql
+    ports:
+      - 8080:8080
