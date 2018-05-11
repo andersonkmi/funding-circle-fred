@@ -7,7 +7,7 @@ services:
     container_name: fred-db
     restart: always
     ports:
-        - "3306:3306"
+        - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=p4SSW0rd
       - MYSQL_DATABASE=demo-fred
