@@ -3,17 +3,20 @@ package com.fundingcircle.service;
 import com.fundingcircle.data.TimeSeriesObservation;
 import com.fundingcircle.repository.FederalReserveRepository;
 import com.fundingcircle.repository.GrossDevelopedProductRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.Collection;
 
 @RestController
 @RequestMapping("/gdpc")
 public class GdpcService {
+    private static final Logger logger = LoggerFactory.getLogger(GdpcService.class);
+
     @Autowired
     private FederalReserveRepository federalReserveRepository;
 
@@ -22,7 +25,9 @@ public class GdpcService {
 
     @RequestMapping(method = RequestMethod.GET, value = "/initial")
     public @ResponseBody Collection<TimeSeriesObservation> initialLoad() {
-        grossDevelopedProductRepository.truncate();
-        return federalReserveRepository.getRealGrossDomesticProduct();
+        logger.info("Invoking initial load");
+        Collection<TimeSeriesObservation> items = federalReserveRepository.getRealGrossDomesticProduct();
+        grossDevelopedProductRepository.insertAll(items);
+        return items;
     }
 }
