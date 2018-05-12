@@ -15,24 +15,24 @@ import java.sql.Types;
 import java.util.Collection;
 
 @Component
-public class CustomerSentimentIndexRepository {
-    private static final Logger logger = LoggerFactory.getLogger(CustomerSentimentIndexRepository.class);
+public class UnemploymentRateRepository {
+    private static final Logger logger = LoggerFactory.getLogger(UnemploymentRateRepository.class);
 
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public CustomerSentimentIndexRepository(DataSource dataSource) {
+    public UnemploymentRateRepository(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Transactional
     public int insertAll(Collection<TimeSeriesObservation> items) {
-        logger.info("Truncating table 'customer_sentiment_index'");
-        jdbcTemplate.execute("TRUNCATE TABLE customer_sentiment_index");
+        logger.info("Truncating table 'unemployment_rate'");
+        jdbcTemplate.execute("TRUNCATE TABLE unemployment_rate");
         logger.info("Table truncation finished");
 
         int count = 0;
-        String query = "INSERT INTO customer_sentiment_index(obs_date, value) VALUES(?, ?)";
+        String query = "INSERT INTO unemployment_rate(obs_date, value) VALUES(?, ?)";
 
         for(TimeSeriesObservation item : items) {
             count += jdbcTemplate.update(connection -> {
@@ -54,8 +54,8 @@ public class CustomerSentimentIndexRepository {
     @Transactional
     public int insertIncremental(Collection<TimeSeriesObservation> items) {
         int count = 0;
-        String query = "INSERT INTO customer_sentiment_index(obs_date, value) VALUES(?, ?)";
-        String verificationQuery = "SELECT COUNT(1) FROM customer_sentiment_index WHERE obs_date = ?";
+        String query = "INSERT INTO unemployment_rate(obs_date, value) VALUES(?, ?)";
+        String verificationQuery = "SELECT COUNT(1) FROM unemployment_rate WHERE obs_date = ?";
 
         for(TimeSeriesObservation item : items) {
             int countItems = jdbcTemplate.queryForObject(verificationQuery, new Object[] { new Date(item.getDate().getTime()) }, Integer.class);
