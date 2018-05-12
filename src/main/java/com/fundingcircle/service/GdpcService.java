@@ -30,7 +30,16 @@ public class GdpcService {
         Collection<TimeSeriesObservation> items = federalReserveRepository.getRealGrossDomesticProduct();
         int totalInserted = grossDevelopedProductRepository.insertAll(items);
         OperationResult result = new OperationResult();
-        result.setCode(0).setMessage("Inserted " + totalInserted + " observations").setTimeSeriesName("Real Gross Domestic Product (GDPC1)");
+        result.setCode(0).setMessage("Inserted " + totalInserted + " observations").setTimeSeries("Real Gross Domestic Product (GDPC1)");
+        return result;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/performIncrementalLoad")
+    public @ResponseBody OperationResult incrementalLoad() {
+        Collection<TimeSeriesObservation> items = federalReserveRepository.getRealGrossDomesticProduct();
+        int totalInserted = grossDevelopedProductRepository.insertIncremental(items);
+        OperationResult result = new OperationResult();
+        result.setCode(0).setMessage("Inserted " + totalInserted + " observations").setTimeSeries("Real Gross Domestic Product (GDPC1)");
         return result;
     }
 }

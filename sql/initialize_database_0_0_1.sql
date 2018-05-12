@@ -27,3 +27,35 @@ LOCK TABLES `gross_domestic_product` WRITE;
 /*!40000 ALTER TABLE `gross_domestic_product` DISABLE KEYS */;
 /*!40000 ALTER TABLE `gross_domestic_product` ENABLE KEYS */;
 UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `customer_sentiment_index`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `customer_sentiment_index` (
+    obs_date DATE NOT NULL,
+	value DECIMAL(18, 4),
+	PRIMARY KEY (`obs_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `customer_sentiment_index` WRITE;
+/*!40000 ALTER TABLE `customer_sentiment_index` DISABLE KEYS */;
+/*!40000 ALTER TABLE `customer_sentiment_index` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `unemployment_rate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `unemployment_rate` (
+    obs_date DATE NOT NULL,
+	value DECIMAL(18, 4),
+	PRIMARY KEY (`obs_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `unemployment_rate` WRITE;
+/*!40000 ALTER TABLE `unemployment_rate` DISABLE KEYS */;
+/*!40000 ALTER TABLE `unemployment_rate` ENABLE KEYS */;
+UNLOCK TABLES;

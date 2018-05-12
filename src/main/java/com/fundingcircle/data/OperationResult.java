@@ -1,12 +1,12 @@
 package com.fundingcircle.data;
 
 public class OperationResult {
-    private String timeSeriesName;
+    private String timeSeries;
     private int code;
     private String message;
 
-    public OperationResult setTimeSeriesName(String name) {
-        timeSeriesName = name;
+    public OperationResult setTimeSeries(String name) {
+        timeSeries = name;
         return this;
     }
 
@@ -28,7 +28,7 @@ public class OperationResult {
         return message;
     }
 
-    public String getTimeSeriesName() {
-        return timeSeriesName;
+    public String getTimeSeries() {
+        return timeSeries;
     }
 }
