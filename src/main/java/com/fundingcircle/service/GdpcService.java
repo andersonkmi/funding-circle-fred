@@ -1,5 +1,6 @@
 package com.fundingcircle.service;
 
+import com.fundingcircle.data.OperationResult;
 import com.fundingcircle.data.TimeSeriesObservation;
 import com.fundingcircle.repository.FederalReserveRepository;
 import com.fundingcircle.repository.GrossDevelopedProductRepository;
@@ -23,11 +24,13 @@ public class GdpcService {
     @Autowired
     private GrossDevelopedProductRepository grossDevelopedProductRepository;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/initial")
-    public @ResponseBody Collection<TimeSeriesObservation> initialLoad() {
+    @RequestMapping(method = RequestMethod.GET, value = "/performInitialLoad")
+    public @ResponseBody OperationResult initialLoad() {
         logger.info("Invoking initial load");
         Collection<TimeSeriesObservation> items = federalReserveRepository.getRealGrossDomesticProduct();
-        grossDevelopedProductRepository.insertAll(items);
-        return items;
+        int totalInserted = grossDevelopedProductRepository.insertAll(items);
+        OperationResult result = new OperationResult();
+        result.setCode(0).setMessage("Inserted " + totalInserted + " observations").setTimeSeriesName("Real Gross Domestic Product (GDPC1)");
+        return result;
     }
 }

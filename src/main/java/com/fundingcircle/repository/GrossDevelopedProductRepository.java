@@ -31,7 +31,7 @@ public class GrossDevelopedProductRepository {
     }
 
     @Transactional
-    public void insertAll(Collection<TimeSeriesObservation> items) {
+    public int insertAll(Collection<TimeSeriesObservation> items) {
         logger.info("Truncating table 'gross_domestic_product'");
         jdbcTemplate.execute("TRUNCATE TABLE gross_domestic_product");
         logger.info("Table truncation finished");
@@ -47,5 +47,7 @@ public class GrossDevelopedProductRepository {
                 return ps;
             });
         }
+
+        return count;
     }
 }
