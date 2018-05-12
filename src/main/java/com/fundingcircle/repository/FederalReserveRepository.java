@@ -10,17 +10,30 @@ import java.util.Collection;
 
 @Service
 public class FederalReserveRepository {
-    private static final String GDPC_URL = "https://api.stlouisfed.org/fred/series/observations?series_id=GDPC1&api_key=bc54afc2fd0f655e0462d52ca0e4dd43&file_type=json";
-
     @Autowired
     private HttpUtil httpUtil;
 
     @Autowired
     private JsonUtil jsonUtil;
 
+    @Autowired
+    private FederalReserveRepositoryConfig federalReserveRepositoryConfig;
+
     public Collection<TimeSeriesObservation> getRealGrossDomesticProduct() {
+        return getData(federalReserveRepositoryConfig.getGdpcUrl());
+    }
+
+    public Collection<TimeSeriesObservation> getSentimentIndex() {
+        return getData(federalReserveRepositoryConfig.getUmcSentUrl());
+    }
+
+    public Collection<TimeSeriesObservation> getUnemploymentRate() {
+        return getData(federalReserveRepositoryConfig.getUnrateUrl());
+    }
+
+    private Collection<TimeSeriesObservation> getData(String url) {
         try {
-            String result = httpUtil.getRequest(GDPC_URL);
+            String result = httpUtil.getRequest(url);
             Collection<TimeSeriesObservation> items = jsonUtil.buildTimeSeriesObservationList(result);
             return items;
         } catch (Exception exception) {
