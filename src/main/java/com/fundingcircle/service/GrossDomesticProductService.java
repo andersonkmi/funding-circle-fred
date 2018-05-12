@@ -15,8 +15,8 @@ import java.util.Collection;
 
 @RestController
 @RequestMapping("/gdpc")
-public class GdpcService {
-    private static final Logger logger = LoggerFactory.getLogger(GdpcService.class);
+public class GrossDomesticProductService {
+    private static final Logger logger = LoggerFactory.getLogger(GrossDomesticProductService.class);
 
     @Autowired
     private FederalReserveRepository federalReserveRepository;
