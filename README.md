@@ -33,3 +33,140 @@ use it in your requests.
 
 In order to build and run this coding quiz, there are some requirements that must be met. They are
 described as follows.
+
+### Build requirements
+
+In order to build this project the following requirements must be met in the machine:
+
+1. Docker 18 or later
+
+2. Docker composer 1.21.1 or later
+
+3. Java SDK 1.8.0_172
+
+4. Gradle 4.8 or later
+
+### How to build the application
+
+In order to build the project, the following command must be executed in the root folder:
+~~~
+$ docker build docker
+~~~
+
+The above command will compile the source code and creates the application JAR file. This application is built upon Spring
+Boot framework. Once the JAR file is created, a Docker image is created and registered locally.
+
+### How to bring up the application
+
+Once the Docker image is created with the application, in order to execute it the following command should be executed:
+~~~
+$ docker-compose up
+~~~
+
+The docker composer will start the application container as well the MySQL container associated with it. It also runs the 
+DDL script creating the required tables. Such script can be found at the path sql/initialize_database_0_0_1.sql. Its 
+contents are:
+```sql
+CREATE DATABASE  IF NOT EXISTS `demo-fred` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `demo-fred`;
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+DROP TABLE IF EXISTS `gross_domestic_product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gross_domestic_product` (
+    obs_date DATETIME NOT NULL,
+	value DECIMAL(18, 4),
+	PRIMARY KEY (`obs_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `gross_domestic_product` WRITE;
+/*!40000 ALTER TABLE `gross_domestic_product` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gross_domestic_product` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `customer_sentiment_index`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `customer_sentiment_index` (
+    obs_date DATETIME NOT NULL,
+	value DECIMAL(18, 4),
+	PRIMARY KEY (`obs_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `customer_sentiment_index` WRITE;
+/*!40000 ALTER TABLE `customer_sentiment_index` DISABLE KEYS */;
+/*!40000 ALTER TABLE `customer_sentiment_index` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `unemployment_rate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `unemployment_rate` (
+    obs_date DATETIME NOT NULL,
+	value DECIMAL(18, 4),
+	PRIMARY KEY (`obs_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `unemployment_rate` WRITE;
+/*!40000 ALTER TABLE `unemployment_rate` DISABLE KEYS */;
+/*!40000 ALTER TABLE `unemployment_rate` ENABLE KEYS */;
+UNLOCK TABLES;
+```
+
+After docker composer is executed, the following messages will be displayed indicating the application and its associated
+MySQL database is ready for use.
+
+~~~
+fred-db          | 2018-05-13T02:17:58.851780Z 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+fred-db          | 2018-05-13T02:17:58.854467Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+fred-db          | 2018-05-13T02:17:58.854666Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+fred-db          | 2018-05-13T02:17:58.856449Z 0 [Note] InnoDB: Waiting for purge to start
+fred-db          | 2018-05-13T02:17:58.906861Z 0 [Note] InnoDB: 5.7.22 started; log sequence number 12372777
+fred-db          | 2018-05-13T02:17:58.907478Z 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+fred-db          | 2018-05-13T02:17:58.909262Z 0 [Note] Plugin 'FEDERATED' is disabled.
+fred-db          | 2018-05-13T02:17:58.914650Z 0 [Note] InnoDB: Buffer pool(s) load completed at 180513  2:17:58
+fred-db          | 2018-05-13T02:17:58.921518Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+fred-db          | 2018-05-13T02:17:58.922180Z 0 [Warning] CA certificate ca.pem is self signed.
+fred-db          | 2018-05-13T02:17:58.929388Z 0 [Note] Server hostname (bind-address): '*'; port: 3306
+fred-db          | 2018-05-13T02:17:58.929610Z 0 [Note] IPv6 is available.
+fred-db          | 2018-05-13T02:17:58.929678Z 0 [Note]   - '::' resolves to '::';
+fred-db          | 2018-05-13T02:17:58.930159Z 0 [Note] Server socket created on IP: '::'.
+fred-db          | 2018-05-13T02:17:59.023117Z 0 [Warning] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+fred-db          | 2018-05-13T02:17:59.025935Z 0 [Warning] 'user' entry 'root@localhost' ignored in --skip-name-resolve mode.
+fred-db          | 2018-05-13T02:17:59.026219Z 0 [Warning] 'user' entry 'mysql.session@localhost' ignored in --skip-name-resolve mode.
+fred-db          | 2018-05-13T02:17:59.026422Z 0 [Warning] 'user' entry 'mysql.sys@localhost' ignored in --skip-name-resolve mode.
+fred-db          | 2018-05-13T02:17:59.026599Z 0 [Warning] 'db' entry 'performance_schema mysql.session@localhost' ignored in --skip-name-resolve mode.
+fred-db          | 2018-05-13T02:17:59.026841Z 0 [Warning] 'db' entry 'sys mysql.sys@localhost' ignored in --skip-name-resolve mode.
+fred-db          | 2018-05-13T02:17:59.026947Z 0 [Warning] 'proxies_priv' entry '@ root@localhost' ignored in --skip-name-resolve mode.
+fred-db          | 2018-05-13T02:17:59.031872Z 0 [Warning] 'tables_priv' entry 'user mysql.session@localhost' ignored in --skip-name-resolve mode.
+fred-db          | 2018-05-13T02:17:59.031988Z 0 [Warning] 'tables_priv' entry 'sys_config mysql.sys@localhost' ignored in --skip-name-resolve mode.
+fred-db          | 2018-05-13T02:17:59.045184Z 0 [Note] Event Scheduler: Loaded 0 events
+fred-db          | 2018-05-13T02:17:59.046233Z 0 [Note] mysqld: ready for connections.
+fred-db          | Version: '5.7.22'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server (GPL)
+~~~
+
+It is recommended to wait 1 to 3 minutes for complete application and MySQL start-up for the 
+first time.
+
+## Executing the data loads
+
+In order to load the data initially and incrementally, some endpoints were created to make it easy
+to perform such operations. They are described as follows.
+
