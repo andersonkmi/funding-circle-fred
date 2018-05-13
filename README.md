@@ -179,7 +179,17 @@ fred-db          | Version: '5.7.22'  socket: '/var/run/mysqld/mysqld.sock'  por
 It is recommended to wait 1 to 3 minutes for complete application and MySQL start-up for the 
 first time.
 
-## Executing the data loads and validations
+### How to bring down the application
+
+In order to shutdown the containers, the following command should be executed:
+~~~
+$ docker-compose down
+~~~
+
+This command will shutdown the containers and remove the internal network created such environment. It is important
+to note that the images must be removed manually later.
+
+## Executing the data loads
 
 In order to load the data initially and incrementally, some endpoints were created to make it easy
 to perform such operations. They are described as follows.
@@ -224,4 +234,39 @@ http://localhost:8080/unrate/performInitialLoad
 
 ~~~
 http://localhost:8080/unrate/performIncrementalLoad
+~~~
+
+At the end of each execution the resulting message is displayed:
+```json
+{
+"timeSeries": "[Name of the time series]",
+"code": 0,
+"message": "Inserted 844 observations"
+}
+```
+
+## Verifying the data loads
+
+Once the environment is up and running, it is possible to access the MySQL database using a client program, i.e. MySQL
+Workbench from the localhost using the following credentials:
+~~~
+Hostname: localhost or 127.0.0.1
+Port: 3306
+User: dbuser
+Password: dbp4ss
+Schema: demo-fred
+~~~
+
+## What was the average rate of unemployment for each year starting in 1980 and going up to 2015?
+
+In order to answer this question the following SQL script was created:
+```mysql-sql
+select year(obs_date) as year, avg(value) as average from unemployment_rate where year(obs_date) >= 1980 and year(obs_date) <= 2015 group by year(obs_date);
+```
+
+It can also be found in the file *sql/average-unemployment-rate.sql* inside the project.
+
+It was also created an endpoint to see such results:
+~~~
+http://localhost:8080/unrate/unemploymenRates
 ~~~
