@@ -16,7 +16,7 @@ DROP TABLE IF EXISTS `gross_domestic_product`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `gross_domestic_product` (
-    obs_date DATE NOT NULL,
+    obs_date DATETIME NOT NULL,
 	value DECIMAL(18, 4),
 	PRIMARY KEY (`obs_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS `customer_sentiment_index`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `customer_sentiment_index` (
-    obs_date DATE NOT NULL,
+    obs_date DATETIME NOT NULL,
 	value DECIMAL(18, 4),
 	PRIMARY KEY (`obs_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -48,7 +48,7 @@ DROP TABLE IF EXISTS `unemployment_rate`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `unemployment_rate` (
-    obs_date DATE NOT NULL,
+    obs_date DATETIME NOT NULL,
 	value DECIMAL(18, 4),
 	PRIMARY KEY (`obs_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

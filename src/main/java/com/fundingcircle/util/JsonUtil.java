@@ -8,10 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Vector;
+
+import static java.util.Calendar.*;
 
 @Service
 public class JsonUtil {
@@ -23,22 +24,25 @@ public class JsonUtil {
 
         JSONArray arr = obj.getJSONArray("observations");
         arr.forEach(item -> {
-            try {
-                TimeSeriesObservation element = build((JSONObject) item);
-                observations.add(element);
-            } catch (Exception exception) {
-                logger.error(exception.getMessage(), exception);
-            }
+            TimeSeriesObservation element = build((JSONObject) item);
+            observations.add(element);
         });
 
         return observations;
     }
 
-    private TimeSeriesObservation build(JSONObject json) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date obsDate = sdf.parse(json.getString("date"));
+    private TimeSeriesObservation build(JSONObject json) {
+        String[] splitted = json.getString("date").split("-");
+        Calendar observationDate = Calendar.getInstance();
+        observationDate.set(YEAR, Integer.parseInt(splitted[0]));
+        observationDate.set(MONTH, Integer.parseInt(splitted[1]) - 1);
+        observationDate.set(DAY_OF_MONTH, Integer.parseInt(splitted[2]));
+        observationDate.set(HOUR, 0);
+        observationDate.set(MINUTE, 0);
+        observationDate.set(SECOND, 0);
+        observationDate.set(MILLISECOND, 0);
         return new TimeSeriesObservation()
-                .setDate(obsDate)
+                .setDate(observationDate)
                 .setValue(json.getString("value").equals(".") ? null : Double.parseDouble(json.getString("value")));
 }
 }

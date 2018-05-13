@@ -1,13 +1,13 @@
 package com.fundingcircle.data;
 
-import java.util.Date;
+import java.util.Calendar;
 
 public class TimeSeriesObservation {
-    private Date date;
+    private Calendar date;
     private Double value = 0.0;
 
 
-    public TimeSeriesObservation setDate(Date date) {
+    public TimeSeriesObservation setDate(Calendar date) {
         this.date = date;
         return this;
     }
@@ -17,7 +17,7 @@ public class TimeSeriesObservation {
         return this;
     }
 
-    public Date getDate() {
+    public Calendar getDate() {
         return date;
     }
 

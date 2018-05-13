@@ -36,7 +36,7 @@ public class GrossDevelopedProductRepository {
         for(TimeSeriesObservation item : items) {
             count += jdbcTemplate.update(connection -> {
                 PreparedStatement ps = connection.prepareStatement(query);
-                ps.setDate(1, new Date(item.getDate().getTime()));
+                ps.setDate(1, new Date(item.getDate().getTimeInMillis()));
                 ps.setDouble(2, item.getValue());
                 return ps;
             });
@@ -52,11 +52,11 @@ public class GrossDevelopedProductRepository {
         String verificationQuery = "SELECT COUNT(1) FROM gross_domestic_product WHERE obs_date = ?";
 
         for(TimeSeriesObservation item : items) {
-            int countItems = jdbcTemplate.queryForObject(verificationQuery, new Object[] { new Date(item.getDate().getTime()) }, Integer.class);
+            int countItems = jdbcTemplate.queryForObject(verificationQuery, new Object[] { new Date(item.getDate().getTimeInMillis()) }, Integer.class);
             if(countItems == 0) {
                 count += jdbcTemplate.update(connection -> {
                     PreparedStatement ps = connection.prepareStatement(query);
-                    ps.setDate(1, new Date(item.getDate().getTime()));
+                    ps.setDate(1, new Date(item.getDate().getTimeInMillis()));
                     ps.setDouble(2, item.getValue());
                     return ps;
                 });
