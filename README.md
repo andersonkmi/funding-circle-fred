@@ -270,3 +270,153 @@ It was also created an endpoint to see such results:
 ~~~
 http://localhost:8080/unrate/unemploymenRates
 ~~~
+
+The result of the above call is illustrated as follows:
+```json
+[
+{
+"year": 1980,
+"averageRate": 7.175
+},
+{
+"year": 1981,
+"averageRate": 7.61666667
+},
+{
+"year": 1982,
+"averageRate": 9.70833333
+},
+{
+"year": 1983,
+"averageRate": 9.6
+},
+{
+"year": 1984,
+"averageRate": 7.50833333
+},
+{
+"year": 1985,
+"averageRate": 7.19166667
+},
+{
+"year": 1986,
+"averageRate": 7
+},
+{
+"year": 1987,
+"averageRate": 6.175
+},
+{
+"year": 1988,
+"averageRate": 5.49166667
+},
+{
+"year": 1989,
+"averageRate": 5.25833333
+},
+{
+"year": 1990,
+"averageRate": 5.61666667
+},
+{
+"year": 1991,
+"averageRate": 6.85
+},
+{
+"year": 1992,
+"averageRate": 7.49166667
+},
+{
+"year": 1993,
+"averageRate": 6.90833333
+},
+{
+"year": 1994,
+"averageRate": 6.1
+},
+{
+"year": 1995,
+"averageRate": 5.59166667
+},
+{
+"year": 1996,
+"averageRate": 5.40833333
+},
+{
+"year": 1997,
+"averageRate": 4.94166667
+},
+{
+"year": 1998,
+"averageRate": 4.5
+},
+{
+"year": 1999,
+"averageRate": 4.21666667
+},
+{
+"year": 2000,
+"averageRate": 3.96666667
+},
+{
+"year": 2001,
+"averageRate": 4.74166667
+},
+{
+"year": 2002,
+"averageRate": 5.78333333
+},
+{
+"year": 2003,
+"averageRate": 5.99166667
+},
+{
+"year": 2004,
+"averageRate": 5.54166667
+},
+{
+"year": 2005,
+"averageRate": 5.08333333
+},
+{
+"year": 2006,
+"averageRate": 4.60833333
+},
+{
+"year": 2007,
+"averageRate": 4.61666667
+},
+{
+"year": 2008,
+"averageRate": 5.8
+},
+{
+"year": 2009,
+"averageRate": 9.28333333
+},
+{
+"year": 2010,
+"averageRate": 9.60833333
+},
+{
+"year": 2011,
+"averageRate": 8.93333333
+},
+{
+"year": 2012,
+"averageRate": 8.075
+},
+{
+"year": 2013,
+"averageRate": 7.35833333
+},
+{
+"year": 2014,
+"averageRate": 6.175
+},
+{
+"year": 2015,
+"averageRate": 5.26666667
+}
+]
+```
