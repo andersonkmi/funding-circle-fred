@@ -260,7 +260,7 @@ Schema: demo-fred
 ## What was the average rate of unemployment for each year starting in 1980 and going up to 2015?
 
 In order to answer this question the following SQL script was created:
-```mysql-sql
+```sql
 select year(obs_date) as year, avg(value) as average from unemployment_rate where year(obs_date) >= 1980 and year(obs_date) <= 2015 group by year(obs_date);
 ```
 
