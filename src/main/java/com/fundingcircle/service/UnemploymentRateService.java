@@ -2,6 +2,7 @@ package com.fundingcircle.service;
 
 import com.fundingcircle.data.OperationResult;
 import com.fundingcircle.data.TimeSeriesObservation;
+import com.fundingcircle.data.UnemploymentRate;
 import com.fundingcircle.repository.FederalReserveRepository;
 import com.fundingcircle.repository.UnemploymentRateRepository;
 import org.slf4j.Logger;
@@ -45,4 +46,8 @@ public class UnemploymentRateService {
         return result;
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/unemploymenRates")
+    public @ResponseBody Collection<UnemploymentRate> getUnemploymentRates() {
+        return unemploymentRateRepository.getUnemploymentRateAverages();
+    }
 }

@@ -1,6 +1,7 @@
 package com.fundingcircle.repository;
 
 import com.fundingcircle.data.TimeSeriesObservation;
+import com.fundingcircle.data.UnemploymentRate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Types;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 @Component
 public class UnemploymentRateRepository {
@@ -72,4 +77,17 @@ public class UnemploymentRateRepository {
         return count;
     }
 
+    @Transactional
+    public Collection<UnemploymentRate> getUnemploymentRateAverages() {
+        String query = "select year(obs_date) as year, sum(value) as total, avg(value) as average from unemployment_rate where year(obs_date) >= 1980 and year(obs_date) <= 2015 group by year(obs_date)";
+
+        Collection<UnemploymentRate> rates = new Vector<>();
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(query);
+        rows.forEach(item -> {
+            UnemploymentRate data = new UnemploymentRate();
+            data.setYear((Integer) item.get("year")).setAverageRate((BigDecimal) item.get("average"));
+            rates.add(data);
+        });
+        return rates;
+    }
 }

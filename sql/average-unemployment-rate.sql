@@ -1,0 +1,1 @@
+select year(obs_date) as year, avg(value) as average from unemployment_rate where year(obs_date) >= 1980 and year(obs_date) <= 2015 group by year(obs_date);
