@@ -46,6 +46,20 @@ In order to build this project the following requirements must be met in the mac
 
 4. Gradle 4.8 or later
 
+### Federal Reserve Bank of St. Louis APIs key configuration
+
+In order to access the APIs of the Federal Reserve Bank, it is recommended to change the key value
+located at *src/main/resources/fred.properties* prior to build the application.
+
+That file contains the endpoints URLs for each of the time series and the it has a key
+already in place, but you must use your own key.
+
+~~~
+gdpc_url=https://api.stlouisfed.org/fred/series/observations?series_id=GDPC1&api_key=[key_must_be_here]&file_type=json
+umcsent_url=https://api.stlouisfed.org/fred/series/observations?series_id=UMCSENT&api_key=[key_must_be_here]&file_type=json
+unrate_url=https://api.stlouisfed.org/fred/series/observations?series_id=UNRATE&api_key=[key_must_be_here]&file_type=json
+~~~
+
 ### How to build the application
 
 In order to build the project, the following command must be executed in the root folder:
@@ -165,8 +179,49 @@ fred-db          | Version: '5.7.22'  socket: '/var/run/mysqld/mysqld.sock'  por
 It is recommended to wait 1 to 3 minutes for complete application and MySQL start-up for the 
 first time.
 
-## Executing the data loads
+## Executing the data loads and validations
 
 In order to load the data initially and incrementally, some endpoints were created to make it easy
 to perform such operations. They are described as follows.
 
+### Real Gross Domestic Product (GDPC1)
+
+#### Initial data load
+
+~~~
+http://localhost:8080/gdpc/performInitialLoad
+~~~
+
+#### Incremental data load
+
+~~~
+http://localhost:8080/gdpc/performIncrementalLoad
+~~~
+
+### University of Michigan Customer Sentiment Index (UMCSENT)
+
+#### Initial data load
+
+~~~
+http://localhost:8080/umcsent/performInitialLoad
+~~~
+
+#### Incremental data load
+
+~~~
+http://localhost:8080/umcsent/performIncrementalLoad
+~~~
+
+### US Civilian Unemployment Rate (UNRATE)
+
+#### Initial data load
+
+~~~
+http://localhost:8080/unrate/performInitialLoad
+~~~
+
+#### Incremental data load
+
+~~~
+http://localhost:8080/unrate/performIncrementalLoad
+~~~
